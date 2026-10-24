@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>Formulario ��� C��lculo Vectorial 3D</title>
+  <style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+</style>
+  <style type="text/css">:root{--bg:#fff;--fg:#1a1a1a;--muted:#555;--line:#d6d6d6;--accent:#1f5fbf;--card:#f5f7fb}
+@media (prefers-color-scheme:dark){:root{--bg:#15171a;--fg:#e8e8e8;--muted:#a0a0a0;--line:#33373d;--accent:#7db0ff;--card:#1e2126}}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.55;max-width:820px;margin:0 auto;padding:16px 16px 80px;font-size:17px}
+h1{font-size:1.7em;margin-top:1.2em}h2{font-size:1.4em;border-bottom:2px solid var(--accent);padding-bottom:4px;margin-top:2em}h3{font-size:1.15em;margin-top:1.6em}
+h1,h2,h3{scroll-margin-top:12px}
+a{color:var(--accent)}
+hr{border:0;border-top:1px solid var(--line);margin:1.6em 0}
+table{border-collapse:collapse;display:block;overflow-x:auto;max-width:100%;margin:1em 0}
+th,td{border:1px solid var(--line);padding:6px 10px;text-align:left;vertical-align:top}
+th{background:var(--card)}
+math[display="block"]{display:block;overflow-x:auto;overflow-y:hidden;max-width:100%;padding:6px 0;margin:.6em 0}
+nav#TOC{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 16px;margin:1em 0}
+nav#TOC ul{padding-left:1.1em}
+blockquote{border-left:4px solid var(--accent);margin:1em 0;padding:2px 14px;color:var(--muted)}
+code{background:var(--card);padding:1px 5px;border-radius:4px}
+header#title-block-header{display:none}
+</style>
+</head>
+<body>
+<header id="title-block-header">
+<h1 class="title">Formulario ��� C��lculo Vectorial 3D</h1>
+</header>
+<nav id="TOC" role="doc-toc">
+<ul>
+<li><a href="#formulario-cálculo-vectorial-3d" id="toc-formulario-cálculo-vectorial-3d">Formulario — Cálculo Vectorial
+3D</a></li>
+<li><a href="#sección-1-qué-ejercicio-es" id="toc-sección-1-qué-ejercicio-es">SECCIÓN 1 — ¿Qué ejercicio
+es?</a></li>
+<li><a href="#sección-2-algoritmos-paso-a-paso" id="toc-sección-2-algoritmos-paso-a-paso">SECCIÓN 2 — Algoritmos paso a
+paso</a>
+<ul>
+<li><a href="#antes-de-todo-producto-punto-vs.-producto-cruz" id="toc-antes-de-todo-producto-punto-vs.-producto-cruz">Antes de todo:
+producto punto vs. producto cruz</a></li>
+<li><a href="#algoritmo-1-aceleración-en-tiro-parabólico" id="toc-algoritmo-1-aceleración-en-tiro-parabólico">Algoritmo 1 —
+Aceleración en tiro parabólico</a></li>
+<li><a href="#algoritmo-2-curvatura-de-curva-plana" id="toc-algoritmo-2-curvatura-de-curva-plana">Algoritmo 2 — Curvatura de
+curva plana</a></li>
+<li><a href="#algoritmo-3-vectores-t-y-n-unitarios" id="toc-algoritmo-3-vectores-t-y-n-unitarios">Algoritmo 3 — Vectores T y
+N unitarios</a></li>
+<li><a href="#algoritmo-4-trabajo-caída-libre" id="toc-algoritmo-4-trabajo-caída-libre">Algoritmo 4 — Trabajo (caída
+libre)</a></li>
+<li><a href="#algoritmo-5-dominio-de-fxy" id="toc-algoritmo-5-dominio-de-fxy">Algoritmo 5 — Dominio de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x,y)</annotation></semantics></math></a></li>
+<li><a href="#algoritmo-6-regla-de-la-cadena-parciales" id="toc-algoritmo-6-regla-de-la-cadena-parciales">Algoritmo 6 — Regla de
+la cadena (parciales)</a></li>
+<li><a href="#algoritmo-7-derivada-direccional" id="toc-algoritmo-7-derivada-direccional">Algoritmo 7 — Derivada
+direccional</a></li>
+<li><a href="#algoritmo-8-volumen-entre-dos-curvas-integral-doble" id="toc-algoritmo-8-volumen-entre-dos-curvas-integral-doble">Algoritmo 8
+— Volumen entre dos curvas (integral doble)</a></li>
+<li><a href="#algoritmo-9-área-lateral-superficie-sobre-curva-cerrada" id="toc-algoritmo-9-área-lateral-superficie-sobre-curva-cerrada">Algoritmo
+9 — Área lateral (superficie sobre curva cerrada)</a></li>
+<li><a href="#algoritmo-10-volumen-esfera-cono-coordenadas-esféricas" id="toc-algoritmo-10-volumen-esfera-cono-coordenadas-esféricas">Algoritmo
+10 — Volumen esfera-cono (coordenadas esféricas)</a></li>
+<li><a href="#algoritmo-11-área-círculo-esfera-cono" id="toc-algoritmo-11-área-círculo-esfera-cono">Algoritmo 11 — Área
+círculo esfera-cono</a></li>
+<li><a href="#algoritmo-12-integral-de-línea-campo-vectorial" id="toc-algoritmo-12-integral-de-línea-campo-vectorial">Algoritmo 12 —
+Integral de línea (campo vectorial)</a></li>
+</ul></li>
+<li><a href="#sección-3-ejercicios-plantilla" id="toc-sección-3-ejercicios-plantilla">SECCIÓN 3 — Ejercicios
+plantilla</a>
+<ul>
+<li><a href="#plantilla-a-parcial-3-derivadas-de-curvas" id="toc-plantilla-a-parcial-3-derivadas-de-curvas">Plantilla A — Parcial
+3, derivadas de curvas</a></li>
+<li><a href="#plantilla-b-parcial-3-funciones-de-varias-variables" id="toc-plantilla-b-parcial-3-funciones-de-varias-variables">Plantilla B
+— Parcial 3, funciones de varias variables</a></li>
+<li><a href="#plantilla-c-parcial-4-volúmenes" id="toc-plantilla-c-parcial-4-volúmenes">Plantilla C — Parcial 4,
+volúmenes</a></li>
+<li><a href="#plantilla-d-parcial-4-área-lateral-e-integral-de-línea" id="toc-plantilla-d-parcial-4-área-lateral-e-integral-de-línea">Plantilla
+D — Parcial 4, área lateral e integral de línea</a></li>
+</ul></li>
+<li><a href="#sección-4-tablas-rápidas" id="toc-sección-4-tablas-rápidas">SECCIÓN 4 — Tablas rápidas</a>
+<ul>
+<li><a href="#derivadas-1ª-y-2ª" id="toc-derivadas-1ª-y-2ª">Derivadas
+(1ª y 2ª)</a></li>
+<li><a href="#integrales-básicas" id="toc-integrales-básicas">Integrales
+básicas</a></li>
+<li><a href="#trigonometría-valores-clave" id="toc-trigonometría-valores-clave">Trigonometría — valores
+clave</a></li>
+<li><a href="#coordenadas-esféricas" id="toc-coordenadas-esféricas">Coordenadas esféricas</a></li>
+<li><a href="#rumbos-vectores-tipo-brújula" id="toc-rumbos-vectores-tipo-brújula">Rumbos (vectores tipo
+brújula)</a></li>
+</ul></li>
+<li><a href="#sección-5-errores-comunes-y-checklist" id="toc-sección-5-errores-comunes-y-checklist">SECCIÓN 5 — Errores
+comunes y checklist</a>
+<ul>
+<li><a href="#errores-que-más-se-repiten" id="toc-errores-que-más-se-repiten">Errores que más se repiten</a></li>
+<li><a href="#checklist-antes-de-entregar-cada-ejercicio" id="toc-checklist-antes-de-entregar-cada-ejercicio">Checklist antes de
+entregar cada ejercicio</a></li>
+</ul></li>
+</ul>
+</nav>
+<h1 id="formulario-cálculo-vectorial-3d">Formulario — Cálculo Vectorial
+3D</h1>
+<h3 id="parciales-3-y-4-guía-completa-de-examen">Parciales 3 y 4 — Guía
+completa de examen</h3>
+<hr />
+<h1 id="sección-1-qué-ejercicio-es">SECCIÓN 1 — ¿Qué ejercicio es?</h1>
+<p>Antes de escribir nada, identifica el tipo con estas señales del
+enunciado:</p>
+<table>
+<colgroup>
+<col style="width: 33%" />
+<col style="width: 33%" />
+<col style="width: 33%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Si el enunciado menciona…</th>
+<th>Es el tema…</th>
+<th>Ve a</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>“tiro parabólico”, “proyectil”, “impacta el suelo”</td>
+<td>Aceleración /
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>T</mi></msub><mo>,</mo><msub><mi>a</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">a_T,a_N</annotation></semantics></math>
+de tiro parabólico</td>
+<td>Algoritmo 1</td>
+</tr>
+<tr class="even">
+<td>“curvatura”,
+“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>”</td>
+<td>Curvatura de curva plana</td>
+<td>Algoritmo 2</td>
+</tr>
+<tr class="odd">
+<td>“vectores T y N”, “movimiento helicoidal”, “hélice”</td>
+<td>T y N unitarios</td>
+<td>Algoritmo 3</td>
+</tr>
+<tr class="even">
+<td>“trabajo realizado”, “cae”, “caída libre”</td>
+<td>Trabajo (física)</td>
+<td>Algoritmo 4</td>
+</tr>
+<tr class="odd">
+<td>“dominio de la función”</td>
+<td>Dominio
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x,y)</annotation></semantics></math></td>
+<td>Algoritmo 5</td>
+</tr>
+<tr class="even">
+<td>“<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>w</mi><mi>/</mi><mi>∂</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">\partial w/\partial s</annotation></semantics></math>”,
+“regla de la cadena”</td>
+<td>Derivadas parciales encadenadas</td>
+<td>Algoritmo 6</td>
+</tr>
+<tr class="odd">
+<td>“derivada direccional”, vector
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mover><mi>u</mi><mo accent="true">→</mo></mover><annotation encoding="application/x-tex">\vec u</annotation></semantics></math>
+dado</td>
+<td>Gradiente + derivada direccional</td>
+<td>Algoritmo 7</td>
+</tr>
+<tr class="even">
+<td>“volumen de la figura”, dos curvas + altura
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math></td>
+<td>Integral doble — volumen</td>
+<td>Algoritmo 8</td>
+</tr>
+<tr class="odd">
+<td>“área lateral”, cilindro + superficie techo</td>
+<td>Integral de línea escalar</td>
+<td>Algoritmo 9</td>
+</tr>
+<tr class="even">
+<td>“esfera” + “cono”, “volumen acotado”</td>
+<td>Coordenadas esféricas — volumen</td>
+<td>Algoritmo 10</td>
+</tr>
+<tr class="odd">
+<td>“área del círculo” + esfera/cono</td>
+<td>Círculo de intersección</td>
+<td>Algoritmo 11</td>
+</tr>
+<tr class="even">
+<td>“integral de campo”,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>F</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec F(x,y)</annotation></semantics></math>
+dado, curva
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">y=g(x)</annotation></semantics></math></td>
+<td>Integral de línea vectorial</td>
+<td>Algoritmo 12</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Regla de oro:</strong> si el problema da
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec r(t)</annotation></semantics></math>
+o pide algo “en el instante
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo></mrow><annotation encoding="application/x-tex">t=</annotation></semantics></math>”,
+casi siempre es Parcial 3 (derivar). Si pide “volumen”, “área”, o da
+límites de integración, es Parcial 4 (integrar).</p>
+<hr />
+<h1 id="sección-2-algoritmos-paso-a-paso">SECCIÓN 2 — Algoritmos paso a
+paso</h1>
+<h2 id="antes-de-todo-producto-punto-vs.-producto-cruz">Antes de todo:
+producto punto vs. producto cruz</h2>
+<p><strong>Producto PUNTO
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>⋅</mo><annotation encoding="application/x-tex">\cdot</annotation></semantics></math>)</strong>
+→ da <strong>un número</strong>.
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">→</mo></mover><mo>⋅</mo><mover><mi>v</mi><mo accent="true">→</mo></mover><mo>=</mo><msub><mi>u</mi><mi>x</mi></msub><msub><mi>v</mi><mi>x</mi></msub><mo>+</mo><msub><mi>u</mi><mi>y</mi></msub><msub><mi>v</mi><mi>y</mi></msub><mo>+</mo><msub><mi>u</mi><mi>z</mi></msub><msub><mi>v</mi><mi>z</mi></msub></mrow><annotation encoding="application/x-tex">\vec u\cdot\vec v = u_xv_x+u_yv_y+u_zv_z</annotation></semantics></math>
+Ejemplo:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⟨</mo><mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo><mo>⋅</mo><mo stretchy="false" form="prefix">⟨</mo><mn>4</mn><mo>,</mo><mn>0</mn><mo>,</mo><mo>−</mo><mn>5</mn><mo stretchy="false" form="postfix">⟩</mo><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>4</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>0</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>+</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>5</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>12</mn><mo>+</mo><mn>0</mn><mo>−</mo><mn>5</mn><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">\langle3,-2,1\rangle\cdot\langle4,0,-5\rangle=(3)(4)+(-2)(0)+(1)(-5)=12+0-5=7</annotation></semantics></math></p>
+<p><strong>Producto CRUZ
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>×</mo><annotation encoding="application/x-tex">\times</annotation></semantics></math>)</strong>
+→ da <strong>un vector</strong>.
+<math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">→</mo></mover><mo>×</mo><mover><mi>v</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>u</mi><mi>y</mi></msub><msub><mi>v</mi><mi>z</mi></msub><mo>−</mo><msub><mi>u</mi><mi>z</mi></msub><msub><mi>v</mi><mi>y</mi></msub><mo>,</mo><mspace width="0.222em"></mspace><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>u</mi><mi>x</mi></msub><msub><mi>v</mi><mi>z</mi></msub><mo>−</mo><msub><mi>u</mi><mi>z</mi></msub><msub><mi>v</mi><mi>x</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>u</mi><mi>x</mi></msub><msub><mi>v</mi><mi>y</mi></msub><mo>−</mo><msub><mi>u</mi><mi>y</mi></msub><msub><mi>v</mi><mi>x</mi></msub><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec u\times\vec v=\langle u_yv_z-u_zv_y,\ -(u_xv_z-u_zv_x),\ u_xv_y-u_yv_x\rangle</annotation></semantics></math>
+Truco: tapa la columna de la letra que calculas y cruza lo que queda
+(cambia signo en la de en medio).</p>
+<p>Ejemplo:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⟨</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo stretchy="false" form="postfix">⟩</mo><mo>×</mo><mo stretchy="false" form="prefix">⟨</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo>,</mo><mo>−</mo><mn>2</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\langle2,-1,3\rangle\times\langle1,3,-2\rangle</annotation></semantics></math>:</p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>:</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>2</mn><mo>−</mo><mn>9</mn><mo>=</mo><mo>−</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">x:(-1)(-2)-(3)(3)=2-9=-7</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>:</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">[</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">]</mo></mrow><mo>=</mo><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>7</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">y:-[(2)(-2)-(3)(1)]=-(-7)=7</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>:</mo><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>3</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>6</mn><mo>+</mo><mn>1</mn><mo>=</mo><mn>7</mn></mrow><annotation encoding="application/x-tex">z:(2)(3)-(-1)(1)=6+1=7</annotation></semantics></math></li>
+<li>Resultado:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mn>7</mn><mo>,</mo><mn>7</mn><mo>,</mo><mn>7</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\langle-7,7,7\rangle</annotation></semantics></math></li>
+</ul>
+<p><strong>Atajo en 2D:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">→</mo></mover><mo>×</mo><mover><mi>v</mi><mo accent="true">→</mo></mover><mo>=</mo><msub><mi>u</mi><mi>x</mi></msub><msub><mi>v</mi><mi>y</mi></msub><mo>−</mo><msub><mi>u</mi><mi>y</mi></msub><msub><mi>v</mi><mi>x</mi></msub></mrow><annotation encoding="application/x-tex">\vec u\times\vec v=u_xv_y-u_yv_x</annotation></semantics></math>
+(da directo un número, no vector).</p>
+<hr />
+<h2 id="algoritmo-1-aceleración-en-tiro-parabólico">Algoritmo 1 —
+Aceleración en tiro parabólico</h2>
+<p><strong>Dado:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>v</mi><mn>0</mn></msub><annotation encoding="application/x-tex">v_0</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Posición:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>v</mi><mn>0</mn></msub><mo>cos</mo><mi>θ</mi><mo>⋅</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>v</mi><mn>0</mn></msub><mo>sin</mo><mi>θ</mi><mo>⋅</mo><mi>t</mi><mo>−</mo><mfrac displaystyle="false"><mn>1</mn><mn>2</mn></mfrac><mi>g</mi><msup><mi>t</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r(t)=\langle v_0\cos\theta\cdot t,\ v_0\sin\theta\cdot t-\tfrac12gt^2\rangle</annotation></semantics></math></li>
+<li>Deriva →
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>v</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>v</mi><mn>0</mn></msub><mo>cos</mo><mi>θ</mi><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>v</mi><mn>0</mn></msub><mo>sin</mo><mi>θ</mi><mo>−</mo><mi>g</mi><mi>t</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec v(t)=\langle v_0\cos\theta,\ v_0\sin\theta-gt\rangle</annotation></semantics></math></li>
+<li>Deriva otra vez →
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>0</mn><mo>,</mo><mo>−</mo><mi>g</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec a(t)=\langle0,-g\rangle</annotation></semantics></math>
+<strong>(siempre igual, sin importar el instante)</strong></li>
+</ol>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>40</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>30</mn><mi>°</mi></mrow><annotation encoding="application/x-tex">v_0=40,\theta=30°</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>a</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>0</mn><mo>,</mo><mo>−</mo><mn>9.8</mn><mo stretchy="false" form="postfix">⟩</mo><mspace width="0.222em"></mspace><mi>m</mi><mi>/</mi><msup><mi>s</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">\vec a=\langle0,-9.8\rangle\ m/s^2</annotation></semantics></math></p>
+<h3 id="variante-a_t-y-a_n-en-el-instante-de-impacto">Variante:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>T</mi></msub><annotation encoding="application/x-tex">a_T</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>N</mi></msub><annotation encoding="application/x-tex">a_N</annotation></semantics></math>
+en el instante de impacto</h3>
+<ol start="4" type="1">
+<li>Instante de impacto:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub><mo>=</mo><mfrac displaystyle="true"><mrow><mn>2</mn><msub><mi>v</mi><mn>0</mn></msub><mo>sin</mo><mi>θ</mi></mrow><mi>g</mi></mfrac></mrow><annotation encoding="application/x-tex">t_f=\dfrac{2v_0\sin\theta}{g}</annotation></semantics></math></li>
+<li>Evalúa
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>v</mi><mi>x</mi></msub><mo>,</mo><msub><mi>v</mi><mi>y</mi></msub><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r&#39;(t_f)=\langle v_x,v_y\rangle</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><msqrt><mrow><msubsup><mi>v</mi><mi>x</mi><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>v</mi><mi>y</mi><mn>2</mn></msubsup></mrow></msqrt></mrow><annotation encoding="application/x-tex">|\vec r&#39;(t_f)|=\sqrt{v_x^2+v_y^2}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>T</mi></msub><mo>=</mo><mfrac displaystyle="true"><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mo>⋅</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>″</mi></mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">a_T=\dfrac{\vec r&#39;\cdot\vec r&#39;&#39;}{|\vec r&#39;(t_f)|}</annotation></semantics></math>
+(producto punto)</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>N</mi></msub><mo>=</mo><mfrac displaystyle="true"><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mo>×</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>″</mi><mo stretchy="true" form="postfix">|</mo></mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">a_N=\dfrac{|\vec r&#39;\times\vec r&#39;&#39;|}{|\vec r&#39;(t_f)|}</annotation></semantics></math>
+(producto cruz)</li>
+<li>Comprueba:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>a</mi><mi>T</mi><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>a</mi><mi>N</mi><mn>2</mn></msubsup><mo>=</mo><msup><mi>g</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a_T^2+a_N^2=g^2</annotation></semantics></math></li>
+</ol>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>32</mn><mo>,</mo><mi>θ</mi><mo>=</mo><mn>35</mn><mi>°</mi></mrow><annotation encoding="application/x-tex">v_0=32,\theta=35°</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>t</mi><mi>f</mi></msub><mo>≈</mo><mn>3.746</mn></mrow><annotation encoding="application/x-tex">t_f\approx3.746</annotation></semantics></math>
+s,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><msub><mi>t</mi><mi>f</mi></msub><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>26.21</mn><mo>,</mo><mo>−</mo><mn>18.35</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r&#39;(t_f)=\langle26.21,-18.35\rangle</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mo stretchy="true" form="postfix">|</mo></mrow><mo>≈</mo><mn>32.0</mn></mrow><annotation encoding="application/x-tex">|\vec r&#39;|\approx32.0</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>⇒</mo><msub><mi>a</mi><mi>T</mi></msub><mo>≈</mo><mn>5.62</mn><mo>,</mo><mspace width="0.222em"></mspace><msub><mi>a</mi><mi>N</mi></msub><mo>≈</mo><mn>8.03</mn></mrow><annotation encoding="application/x-tex">\Rightarrow a_T\approx5.62,\ a_N\approx8.03</annotation></semantics></math>
+(comprobación:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mn>5.62</mn><mn>2</mn></msup><mo>+</mo><msup><mn>8.03</mn><mn>2</mn></msup><mo>≈</mo><mn>96.04</mn><mo>=</mo><msup><mi>g</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">5.62^2+8.03^2\approx96.04=g^2</annotation></semantics></math>
+✓)</p>
+<hr />
+<h2 id="algoritmo-2-curvatura-de-curva-plana">Algoritmo 2 — Curvatura de
+curva plana</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mrow><mo stretchy="true" form="prefix">|</mo><mi>x</mi><mi>′</mi><mi>y</mi><mi>″</mi><mo>−</mo><mi>y</mi><mi>′</mi><mi>x</mi><mi>″</mi><mo stretchy="true" form="postfix">|</mo></mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><msup><mi>′</mi><mn>2</mn></msup><mo>+</mo><mi>y</mi><msup><mi>′</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup></mfrac></mrow><annotation encoding="application/x-tex">\kappa(t)=\frac{|x&#39;y&#39;&#39;-y&#39;x&#39;&#39;|}{(x&#39;^2+y&#39;^2)^{3/2}}</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Saca
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi>′</mi><mo>,</mo><mi>y</mi><mi>′</mi><mo>,</mo><mi>x</mi><mi>″</mi><mo>,</mo><mi>y</mi><mi>″</mi></mrow><annotation encoding="application/x-tex">x&#39;,y&#39;,x&#39;&#39;,y&#39;&#39;</annotation></semantics></math></li>
+<li>Numerador:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">|</mo><mi>x</mi><mi>′</mi><mi>y</mi><mi>″</mi><mo>−</mo><mi>y</mi><mi>′</mi><mi>x</mi><mi>″</mi><mo stretchy="true" form="postfix">|</mo></mrow><annotation encoding="application/x-tex">|x&#39;y&#39;&#39;-y&#39;x&#39;&#39;|</annotation></semantics></math></li>
+<li>Denominador:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><msup><mi>′</mi><mn>2</mn></msup><mo>+</mo><mi>y</mi><msup><mi>′</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">(x&#39;^2+y&#39;^2)^{3/2}</annotation></semantics></math></li>
+<li>Divide</li>
+</ol>
+<p><strong>Ejemplo:</strong> elipse
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>4</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mo>=</mo><mn>3</mn><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">x=4\cos t,\ y=3\sin t</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi>′</mi><mo>=</mo><mo>−</mo><mn>4</mn><mo>sin</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mi>′</mi><mo>=</mo><mn>3</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>x</mi><mi>″</mi><mo>=</mo><mo>−</mo><mn>4</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mi>″</mi><mo>=</mo><mo>−</mo><mn>3</mn><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">x&#39;=-4\sin t,\ y&#39;=3\cos t,\ x&#39;&#39;=-4\cos t,\ y&#39;&#39;=-3\sin t</annotation></semantics></math></li>
+<li>Numerador:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>12</mn><msup><mo>sin</mo><mn>2</mn></msup><mi>t</mi><mo>+</mo><mn>12</mn><msup><mo>cos</mo><mn>2</mn></msup><mi>t</mi><mo>=</mo><mn>12</mn></mrow><annotation encoding="application/x-tex">12\sin^2t+12\cos^2t=12</annotation></semantics></math></li>
+<li>Denominador:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>16</mn><msup><mo>sin</mo><mn>2</mn></msup><mi>t</mi><mo>+</mo><mn>9</mn><msup><mo>cos</mo><mn>2</mn></msup><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup><annotation encoding="application/x-tex">(16\sin^2t+9\cos^2t)^{3/2}</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac><mn>12</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>16</mn><msup><mo>sin</mo><mn>2</mn></msup><mi>t</mi><mo>+</mo><mn>9</mn><msup><mo>cos</mo><mn>2</mn></msup><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup></mfrac></mrow><annotation encoding="application/x-tex">\kappa(t)=\frac{12}{(16\sin^2t+9\cos^2t)^{3/2}}</annotation></semantics></math></p>
+<p>En
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">t=0</annotation></semantics></math>:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>κ</mi><mo>=</mo><mfrac displaystyle="true"><mn>12</mn><mn>27</mn></mfrac><mo>≈</mo><mn>0.444</mn></mrow><annotation encoding="application/x-tex">\kappa=\dfrac{12}{27}\approx0.444</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-3-vectores-t-y-n-unitarios">Algoritmo 3 — Vectores T y
+N unitarios</h2>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec r(t)</annotation></semantics></math>
+→ deriva →
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec r&#39;(t)</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac displaystyle="true"><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\vec T(t)=\dfrac{\vec r&#39;(t)}{|\vec r&#39;(t)|}</annotation></semantics></math></li>
+<li>Deriva
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec T(t)</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec T&#39;(t)</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>N</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mfrac displaystyle="true"><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>T</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow></mfrac></mrow><annotation encoding="application/x-tex">\vec N(t)=\dfrac{\vec T&#39;(t)}{|\vec T&#39;(t)|}</annotation></semantics></math></li>
+</ol>
+<p><strong>Ejemplo:</strong> hélice
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>3</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mn>3</mn><mo>sin</mo><mi>t</mi><mo>,</mo><mn>4</mn><mi>t</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r(t)=\langle3\cos t,3\sin t,4t\rangle</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mn>3</mn><mo>sin</mo><mi>t</mi><mo>,</mo><mn>3</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mn>4</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r&#39;(t)=\langle-3\sin t,3\cos t,4\rangle</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>r</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><msqrt><mrow><mn>9</mn><mo>+</mo><mn>16</mn></mrow></msqrt><mo>=</mo><mn>5</mn></mrow><annotation encoding="application/x-tex">|\vec r&#39;(t)|=\sqrt{9+16}=5</annotation></semantics></math>
+(constante)</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mfrac displaystyle="false"><mn>3</mn><mn>5</mn></mfrac><mo>sin</mo><mi>t</mi><mo>,</mo><mfrac displaystyle="false"><mn>3</mn><mn>5</mn></mfrac><mo>cos</mo><mi>t</mi><mo>,</mo><mfrac displaystyle="false"><mn>4</mn><mn>5</mn></mfrac><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec T(t)=\langle-\tfrac35\sin t,\tfrac35\cos t,\tfrac45\rangle</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mfrac displaystyle="false"><mn>3</mn><mn>5</mn></mfrac><mo>cos</mo><mi>t</mi><mo>,</mo><mo>−</mo><mfrac displaystyle="false"><mn>3</mn><mn>5</mn></mfrac><mo>sin</mo><mi>t</mi><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec T&#39;(t)=\langle-\tfrac35\cos t,-\tfrac35\sin t,0\rangle</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>T</mi><mo accent="true">→</mo></mover><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="true" form="postfix">|</mo></mrow><mo>=</mo><mfrac displaystyle="false"><mn>3</mn><mn>5</mn></mfrac></mrow><annotation encoding="application/x-tex">|\vec T&#39;(t)|=\tfrac35</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>N</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mo>cos</mo><mi>t</mi><mo>,</mo><mo>−</mo><mo>sin</mo><mi>t</mi><mo>,</mo><mn>0</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec N(t)=\langle-\cos t,-\sin t,0\rangle</annotation></semantics></math></li>
+</ul>
+<hr />
+<h2 id="algoritmo-4-trabajo-caída-libre">Algoritmo 4 — Trabajo (caída
+libre)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>m</mi><mi>g</mi><mi>d</mi><mspace width="2.0em"></mspace><mi>d</mi><mo>=</mo><mfrac displaystyle="false"><mn>1</mn><mn>2</mn></mfrac><mi>g</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">W=mgd \qquad d=\tfrac12gt^2</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mfrac displaystyle="false"><mn>1</mn><mn>2</mn></mfrac><mi>g</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">d=\tfrac12gt^2</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mi>m</mi><mi>g</mi><mo>⋅</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">W=mg\cdot d</annotation></semantics></math></li>
+</ol>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>m</mi><mo>=</mo><mn>50</mn></mrow><annotation encoding="application/x-tex">m=50</annotation></semantics></math>
+kg,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>90</mn></mrow><annotation encoding="application/x-tex">t=90</annotation></semantics></math>
+s:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mo>=</mo><mfrac displaystyle="false"><mn>1</mn><mn>2</mn></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mn>9.8</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>8100</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>39</mn><mo>,</mo><mn>690</mn></mrow><annotation encoding="application/x-tex">d=\tfrac12(9.8)(8100)=39{,}690</annotation></semantics></math>
+m;
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>W</mi><mo>=</mo><mn>50</mn><mrow><mo stretchy="true" form="prefix">(</mo><mn>9.8</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>39</mn><mo>,</mo><mn>690</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>19</mn><mo>,</mo><mn>448</mn><mo>,</mo><mn>100</mn></mrow><annotation encoding="application/x-tex">W=50(9.8)(39{,}690)=19{,}448{,}100</annotation></semantics></math>
+J</p>
+<hr />
+<h2 id="algoritmo-5-dominio-de-fxy">Algoritmo 5 — Dominio de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(x,y)</annotation></semantics></math></h2>
+<p><strong>Reglas:</strong> adentro de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mspace width="0.222em"></mspace></msqrt><annotation encoding="application/x-tex">\sqrt{\ }</annotation></semantics></math>
+o
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mo>ln</mo><annotation encoding="application/x-tex">\ln</annotation></semantics></math>
+debe ser
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">&gt;0</annotation></semantics></math>
+(o
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≥</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\geq0</annotation></semantics></math>
+si es solo raíz); denominador
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>≠</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\neq0</annotation></semantics></math>.</p>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo>ln</mo><msqrt><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mi>y</mi></mrow></msqrt></mrow><annotation encoding="application/x-tex">f(x,y)=\ln\sqrt{x^2-y}</annotation></semantics></math>
+→ necesita
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><mi>y</mi><mo>&gt;</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">x^2-y&gt;0</annotation></semantics></math>
+→ <strong>Dominio:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">{</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>∣</mo><mi>y</mi><mo>&lt;</mo><msup><mi>x</mi><mn>2</mn></msup><mo stretchy="false" form="postfix">}</mo></mrow><annotation encoding="application/x-tex">\{(x,y)\mid y&lt;x^2\}</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-6-regla-de-la-cadena-parciales">Algoritmo 6 — Regla de
+la cadena (parciales)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>∂</mi><mi>w</mi></mrow><mrow><mi>∂</mi><mi>s</mi></mrow></mfrac><mo>=</mo><mfrac><mrow><mi>∂</mi><mi>w</mi></mrow><mrow><mi>∂</mi><mi>x</mi></mrow></mfrac><mfrac><mrow><mi>∂</mi><mi>x</mi></mrow><mrow><mi>∂</mi><mi>s</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mi>∂</mi><mi>w</mi></mrow><mrow><mi>∂</mi><mi>y</mi></mrow></mfrac><mfrac><mrow><mi>∂</mi><mi>y</mi></mrow><mrow><mi>∂</mi><mi>s</mi></mrow></mfrac><mo>+</mo><mfrac><mrow><mi>∂</mi><mi>w</mi></mrow><mrow><mi>∂</mi><mi>z</mi></mrow></mfrac><mfrac><mrow><mi>∂</mi><mi>z</mi></mrow><mrow><mi>∂</mi><mi>s</mi></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial w}{\partial s}=\frac{\partial w}{\partial x}\frac{\partial x}{\partial s}+\frac{\partial w}{\partial y}\frac{\partial y}{\partial s}+\frac{\partial w}{\partial z}\frac{\partial z}{\partial s}</annotation></semantics></math></p>
+<p><strong>Tip:</strong> si una variable no depende de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>,
+ese término se hace cero.</p>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mfrac displaystyle="true"><mrow><mi>y</mi><mo>−</mo><mi>z</mi></mrow><msqrt><mrow><mn>1</mn><mo>+</mo><mi>x</mi></mrow></msqrt></mfrac></mrow><annotation encoding="application/x-tex">w=\dfrac{y-z}{\sqrt{1+x}}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>s</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mo>=</mo><mo>−</mo><mi>r</mi><mo>+</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>z</mi><mo>=</mo><msqrt><mi>s</mi></msqrt></mrow><annotation encoding="application/x-tex">x=s,\ y=-r+t,\ z=\sqrt s</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+no tiene
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math>
+→ término eliminado</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>x</mi><mi>/</mi><mi>∂</mi><mi>s</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\partial x/\partial s=1</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>z</mi><mi>/</mi><mi>∂</mi><mi>s</mi><mo>=</mo><mfrac displaystyle="true"><mn>1</mn><mrow><mn>2</mn><msqrt><mi>s</mi></msqrt></mrow></mfrac></mrow><annotation encoding="application/x-tex">\partial z/\partial s=\dfrac{1}{2\sqrt s}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>w</mi><mi>/</mi><mi>∂</mi><mi>x</mi><mo>=</mo><mo>−</mo><mfrac displaystyle="true"><mrow><mi>y</mi><mo>−</mo><mi>z</mi></mrow><mrow><mn>2</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">\partial w/\partial x=-\dfrac{y-z}{2(1+x)^{3/2}}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>w</mi><mi>/</mi><mi>∂</mi><mi>z</mi><mo>=</mo><mfrac displaystyle="true"><mrow><mo>−</mo><mn>1</mn></mrow><msqrt><mrow><mn>1</mn><mo>+</mo><mi>x</mi></mrow></msqrt></mfrac></mrow><annotation encoding="application/x-tex">\partial w/\partial z=\dfrac{-1}{\sqrt{1+x}}</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac><mrow><mi>∂</mi><mi>w</mi></mrow><mrow><mi>∂</mi><mi>s</mi></mrow></mfrac><mo>=</mo><mo>−</mo><mfrac><mrow><mi>y</mi><mo>−</mo><mi>z</mi></mrow><mrow><mn>2</mn><msup><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>+</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup></mrow></mfrac><mo>−</mo><mfrac><mn>1</mn><mrow><mn>2</mn><msqrt><mi>s</mi></msqrt><msqrt><mrow><mn>1</mn><mo>+</mo><mi>x</mi></mrow></msqrt></mrow></mfrac></mrow><annotation encoding="application/x-tex">\frac{\partial w}{\partial s}=-\frac{y-z}{2(1+x)^{3/2}}-\frac{1}{2\sqrt s\sqrt{1+x}}</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-7-derivada-direccional">Algoritmo 7 — Derivada
+direccional</h2>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Si es implícita
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi>y</mi><mi>z</mi><mo>=</mo><mi>k</mi></mrow><annotation encoding="application/x-tex">xyz=k</annotation></semantics></math>),
+despeja
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">z=f(x,y)</annotation></semantics></math></li>
+<li>Gradiente
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∇</mi><mi>f</mi><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><msub><mi>f</mi><mi>x</mi></msub><mo>,</mo><msub><mi>f</mi><mi>y</mi></msub><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\nabla f=\langle f_x,f_y\rangle</annotation></semantics></math></li>
+<li>Evalúa en el punto</li>
+<li>Vector unitario
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">̂</mo></mover><mo>=</mo><mover><mi>u</mi><mo accent="true">→</mo></mover><mi>/</mi><mrow><mo stretchy="true" form="prefix">|</mo><mover><mi>u</mi><mo accent="true">→</mo></mover><mo stretchy="true" form="postfix">|</mo></mrow></mrow><annotation encoding="application/x-tex">\hat u=\vec u/|\vec u|</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mover><mi>u</mi><mo accent="true">̂</mo></mover></msub><mi>f</mi><mo>=</mo><mi>∇</mi><mi>f</mi><mo>⋅</mo><mover><mi>u</mi><mo accent="true">̂</mo></mover></mrow><annotation encoding="application/x-tex">D_{\hat u}f=\nabla f\cdot\hat u</annotation></semantics></math></li>
+</ol>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi>y</mi><mi>z</mi><mo>=</mo><mn>10</mn></mrow><annotation encoding="application/x-tex">xyz=10</annotation></semantics></math>,
+punto
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(2,2)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec u=\langle1,3\rangle</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>10</mn><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">z=10/(xy)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∇</mi><mi>f</mi><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mn>10</mn><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><msup><mi>x</mi><mn>2</mn></msup><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mo>−</mo><mn>10</mn><mi>/</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><msup><mi>y</mi><mn>2</mn></msup><mo stretchy="true" form="postfix">)</mo></mrow><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\nabla f=\langle-10/(x^2y),-10/(xy^2)\rangle</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∇</mi><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mn>1.25</mn><mo>,</mo><mo>−</mo><mn>1.25</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\nabla f(2,2)=\langle-1.25,-1.25\rangle</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">̂</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>1</mn><mo>,</mo><mn>3</mn><mo stretchy="false" form="postfix">⟩</mo><mi>/</mi><msqrt><mn>10</mn></msqrt></mrow><annotation encoding="application/x-tex">\hat u=\langle1,3\rangle/\sqrt{10}</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>D</mi><mover><mi>u</mi><mo accent="true">̂</mo></mover></msub><mi>f</mi><mo>=</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1.25</mn><mo>−</mo><mn>3.75</mn><mo stretchy="true" form="postfix">)</mo></mrow><mi>/</mi><msqrt><mn>10</mn></msqrt><mo>=</mo><mo>−</mo><mn>5</mn><mi>/</mi><msqrt><mn>10</mn></msqrt><mo>≈</mo><mo>−</mo><mn>1.58</mn></mrow><annotation encoding="application/x-tex">D_{\hat u}f=(-1.25-3.75)/\sqrt{10}=-5/\sqrt{10}\approx-1.58</annotation></semantics></math></li>
+</ul>
+<hr />
+<h2 id="algoritmo-8-volumen-entre-dos-curvas-integral-doble">Algoritmo 8
+— Volumen entre dos curvas (integral doble)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><msub><mo>∬</mo><mi>R</mi></msub><mi>h</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">V=\iint_R h(x,y)\,dA</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Encuentra límites (intersección de curvas)</li>
+<li>Arma la integral doble</li>
+<li>Integra primero la variable interna, luego la externa</li>
+</ol>
+<p><strong>Ejemplo:</strong> entre
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">y=x^2+2</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">y=4</annotation></semantics></math>,
+altura
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mfrac displaystyle="false"><mrow><mn>3</mn><mi>y</mi></mrow><mn>4</mn></mfrac></mrow><annotation encoding="application/x-tex">z=\tfrac{3y}4</annotation></semantics></math></p>
+<ul>
+<li>Límites:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mo>±</mo><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">x=\pm\sqrt2</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><msubsup><mo>∫</mo><mrow><mo>−</mo><msqrt><mn>2</mn></msqrt></mrow><msqrt><mn>2</mn></msqrt></msubsup><msubsup><mo>∫</mo><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><mn>2</mn></mrow><mn>4</mn></msubsup><mfrac><mrow><mn>3</mn><mi>y</mi></mrow><mn>4</mn></mfrac><mspace width="0.167em"></mspace><mi>d</mi><mi>y</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi><mo>=</mo><mfrac><mrow><mn>32</mn><msqrt><mn>2</mn></msqrt></mrow><mn>5</mn></mfrac><mo>≈</mo><mn>9.05</mn></mrow><annotation encoding="application/x-tex">V=\int_{-\sqrt2}^{\sqrt2}\int_{x^2+2}^4\frac{3y}4\,dy\,dx=\frac{32\sqrt2}{5}\approx9.05</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-9-área-lateral-superficie-sobre-curva-cerrada">Algoritmo 9
+— Área lateral (superficie sobre curva cerrada)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><msub><mo>∮</mo><mi>C</mi></msub><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>s</mi></mrow><annotation encoding="application/x-tex">A=\oint_C f(x,y)\,ds</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Parametriza la curva base (círculo):
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>,</mo><mi>y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">x(\theta),y(\theta)</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>s</mi><mo>=</mo><mi>d</mi><mi>θ</mi></mrow><annotation encoding="application/x-tex">ds=d\theta</annotation></semantics></math>
+si radio
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">=1</annotation></semantics></math></li>
+<li>Sustituye en la función techo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>f</mi><annotation encoding="application/x-tex">f</annotation></semantics></math></li>
+<li>Integra de 0 a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math></li>
+</ol>
+<p><strong>Ejemplo:</strong> cilindro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">(x-1)^2+y^2=1</annotation></semantics></math>,
+techo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>4</mn><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">z=4-x^2-y^2</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mn>1</mn><mo>+</mo><mo>cos</mo><mi>θ</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mo>=</mo><mo>sin</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">x=1+\cos\theta,\ y=\sin\theta</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>=</mo><mn>2</mn><mo>+</mo><mn>2</mn><mo>cos</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">x^2+y^2=2+2\cos\theta</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mo>=</mo><mn>2</mn><mo>−</mo><mn>2</mn><mo>cos</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">f=2-2\cos\theta</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mrow><mn>2</mn><mi>π</mi></mrow></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mo>−</mo><mn>2</mn><mo>cos</mo><mi>θ</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>θ</mi><mo>=</mo><mn>4</mn><mi>π</mi><mo>≈</mo><mn>12.57</mn></mrow><annotation encoding="application/x-tex">A=\int_0^{2\pi}(2-2\cos\theta)\,d\theta=4\pi\approx12.57</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-10-volumen-esfera-cono-coordenadas-esféricas">Algoritmo 10
+— Volumen esfera-cono (coordenadas esféricas)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><msubsup><mo>∫</mo><mn>0</mn><mrow><mn>2</mn><mi>π</mi></mrow></msubsup><msubsup><mo>∫</mo><mn>0</mn><msub><mi>φ</mi><mn>0</mn></msub></msubsup><msubsup><mo>∫</mo><mn>0</mn><msub><mi>ρ</mi><mn>0</mn></msub></msubsup><msup><mi>ρ</mi><mn>2</mn></msup><mo>sin</mo><mi>φ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>ρ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>φ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>θ</mi></mrow><annotation encoding="application/x-tex">V=\int_0^{2\pi}\int_0^{\varphi_0}\int_0^{\rho_0}\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>:
+0 al radio de la esfera</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>φ</mi><annotation encoding="application/x-tex">\varphi</annotation></semantics></math>:
+0 al ángulo del cono</li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>:
+0 a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math></li>
+<li>Integra en ese orden</li>
+</ol>
+<p><strong>Ejemplo:</strong> esfera radio 4, cono
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>φ</mi><mo>=</mo><mi>π</mi><mi>/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\varphi=\pi/4</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mn>4</mn></msubsup><msup><mi>ρ</mi><mn>2</mn></msup><mi>d</mi><mi>ρ</mi><mo>=</mo><mn>64</mn><mi>/</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">\int_0^4\rho^2d\rho=64/3</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mrow><mi>π</mi><mi>/</mi><mn>4</mn></mrow></msubsup><mo>sin</mo><mi>φ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>φ</mi><mo>=</mo><mn>1</mn><mo>−</mo><mfrac displaystyle="false"><msqrt><mn>2</mn></msqrt><mn>2</mn></mfrac><mo>≈</mo><mn>0.2929</mn></mrow><annotation encoding="application/x-tex">\int_0^{\pi/4}\sin\varphi\,d\varphi=1-\tfrac{\sqrt2}2\approx0.2929</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mrow><mn>2</mn><mi>π</mi></mrow></msubsup><mi>d</mi><mi>θ</mi><mo>=</mo><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">\int_0^{2\pi}d\theta=2\pi</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>V</mi><mo>=</mo><mfrac><mn>64</mn><mn>3</mn></mfrac><mrow><mo stretchy="true" form="prefix">(</mo><mn>0.2929</mn><mo stretchy="true" form="postfix">)</mo></mrow><mrow><mo stretchy="true" form="prefix">(</mo><mn>2</mn><mi>π</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>≈</mo><mn>39.26</mn></mrow><annotation encoding="application/x-tex">V=\frac{64}3(0.2929)(2\pi)\approx39.26</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-11-área-círculo-esfera-cono">Algoritmo 11 — Área
+círculo esfera-cono</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mi>ρ</mi><mo>sin</mo><mi>φ</mi><mspace width="2.0em"></mspace><mi>A</mi><mo>=</mo><mi>π</mi><msup><mi>r</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">r=\rho\sin\varphi \qquad A=\pi r^2</annotation></semantics></math></p>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>ρ</mi><mo>=</mo><mn>4</mn><mo>,</mo><mi>φ</mi><mo>=</mo><mi>π</mi><mi>/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\rho=4,\varphi=\pi/4</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>r</mi><mo>=</mo><mn>2</mn><msqrt><mn>2</mn></msqrt></mrow><annotation encoding="application/x-tex">r=2\sqrt2</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>A</mi><mo>=</mo><mn>8</mn><mi>π</mi><mo>≈</mo><mn>25.13</mn></mrow><annotation encoding="application/x-tex">A=8\pi\approx25.13</annotation></semantics></math></p>
+<hr />
+<h2 id="algoritmo-12-integral-de-línea-campo-vectorial">Algoritmo 12 —
+Integral de línea (campo vectorial)</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∫</mo><mi>C</mi></msub><mover><mi>F</mi><mo accent="true">→</mo></mover><mo>⋅</mo><mi>d</mi><mover><mi>r</mi><mo accent="true">→</mo></mover><mo>=</mo><msubsup><mo>∫</mo><mi>a</mi><mi>b</mi></msubsup><mrow><mo stretchy="true" form="prefix">[</mo><mi>P</mi><mo>+</mo><mi>Q</mi><mo>⋅</mo><mfrac><mrow><mi>d</mi><mi>y</mi></mrow><mrow><mi>d</mi><mi>x</mi></mrow></mfrac><mo stretchy="true" form="postfix">]</mo></mrow><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int_C\vec F\cdot d\vec r=\int_a^b\left[P+Q\cdot\frac{dy}{dx}\right]dx</annotation></semantics></math></p>
+<p><strong>Pasos:</strong></p>
+<ol type="1">
+<li>Identifica
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>,</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P,Q</annotation></semantics></math>
+de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>F</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mi>P</mi><mo>,</mo><mi>Q</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec F=\langle P,Q\rangle</annotation></semantics></math></li>
+<li>Sustituye
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mi>g</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">y=g(x)</annotation></semantics></math>
+en
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>,</mo><mi>Q</mi></mrow><annotation encoding="application/x-tex">P,Q</annotation></semantics></math></li>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>y</mi><mi>/</mi><mi>d</mi><mi>x</mi><mo>=</mo><mi>g</mi><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">dy/dx=g&#39;(x)</annotation></semantics></math></li>
+<li>Arma el integrando</li>
+<li>Integra (puede requerir partes:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>u</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>v</mi><mo>=</mo><mi>u</mi><mi>v</mi><mo>−</mo><mo>∫</mo><mi>v</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">\int u\,dv=uv-\int v\,du</annotation></semantics></math>)</li>
+</ol>
+<p><strong>Ejemplo:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>F</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mi>y</mi><mo>,</mo><mi>x</mi><mo>−</mo><mn>2</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec F=\langle-y,x-2\rangle</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mo>cos</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">y=\cos x</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mi>π</mi><mi>/</mi><mn>2</mn><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">x\in[0,\pi/2]</annotation></semantics></math></p>
+<ul>
+<li><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo>=</mo><mo>−</mo><mo>cos</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">P=-\cos x</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>Q</mi><mo>=</mo><mi>x</mi><mo>−</mo><mn>2</mn></mrow><annotation encoding="application/x-tex">Q=x-2</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>d</mi><mi>y</mi><mi>/</mi><mi>d</mi><mi>x</mi><mo>=</mo><mo>−</mo><mo>sin</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">dy/dx=-\sin x</annotation></semantics></math></li>
+<li>Integrando:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>cos</mo><mi>x</mi><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>sin</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">-\cos x-(x-2)\sin x</annotation></semantics></math></li>
+<li>Parte 1:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><msubsup><mo>∫</mo><mn>0</mn><mrow><mi>π</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mo>cos</mo><mi>x</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">-\int_0^{\pi/2}\cos x\,dx=-1</annotation></semantics></math></li>
+<li>Parte 2 (por partes):
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mo>∫</mo><mn>0</mn><mrow><mi>π</mi><mi>/</mi><mn>2</mn></mrow></msubsup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>sin</mo><mi>x</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi><mo>=</mo><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\int_0^{\pi/2}(x-2)\sin x\,dx=-1</annotation></semantics></math></li>
+</ul>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∫</mo><mi>C</mi></msub><mover><mi>F</mi><mo accent="true">→</mo></mover><mo>⋅</mo><mi>d</mi><mover><mi>r</mi><mo accent="true">→</mo></mover><mo>=</mo><mo>−</mo><mn>1</mn><mo>−</mo><mrow><mo stretchy="true" form="prefix">(</mo><mo>−</mo><mn>1</mn><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mn>0</mn></mrow><annotation encoding="application/x-tex">\int_C\vec F\cdot d\vec r=-1-(-1)=0</annotation></semantics></math></p>
+<hr />
+<h1 id="sección-3-ejercicios-plantilla">SECCIÓN 3 — Ejercicios
+plantilla</h1>
+<h2 id="plantilla-a-parcial-3-derivadas-de-curvas">Plantilla A — Parcial
+3, derivadas de curvas</h2>
+<p><strong>1)</strong> Un proyectil se lanza con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>v</mi><mn>0</mn></msub><mo>=</mo><mn>28</mn></mrow><annotation encoding="application/x-tex">v_0=28</annotation></semantics></math>
+m/s a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>θ</mi><mo>=</mo><mn>40</mn><mi>°</mi></mrow><annotation encoding="application/x-tex">\theta=40°</annotation></semantics></math>.
+Determina las componentes de la aceleración en el instante de
+impacto.</p>
+<p><strong>2)</strong> Determina
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>T</mi></msub><annotation encoding="application/x-tex">a_T</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>N</mi></msub><annotation encoding="application/x-tex">a_N</annotation></semantics></math>
+para el mismo proyectil del ejercicio 1.</p>
+<p><strong>3)</strong> Determina
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>T</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec T(t)</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>N</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">\vec N(t)</annotation></semantics></math>
+para la hélice
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>r</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>5</mn><mo>cos</mo><mi>t</mi><mo>,</mo><mn>5</mn><mo>sin</mo><mi>t</mi><mo>,</mo><mn>12</mn><mi>t</mi><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec r(t)=\langle5\cos t,5\sin t,12t\rangle</annotation></semantics></math>.</p>
+<p><em>(Algoritmos 1 y 3. En el 3,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mrow><msup><mn>5</mn><mn>2</mn></msup><mo>+</mo><msup><mn>12</mn><mn>2</mn></msup></mrow></msqrt><mo>=</mo><mn>13</mn></mrow><annotation encoding="application/x-tex">\sqrt{5^2+12^2}=13</annotation></semantics></math>
+— número “bonito” a propósito, como suelen salir en examen.)</em></p>
+<h2 id="plantilla-b-parcial-3-funciones-de-varias-variables">Plantilla B
+— Parcial 3, funciones de varias variables</h2>
+<p><strong>4)</strong> Determina el dominio de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><msqrt><mrow><mn>25</mn><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow></msqrt></mrow><annotation encoding="application/x-tex">f(x,y)=\sqrt{25-x^2-y^2}</annotation></semantics></math>.</p>
+<p><strong>5)</strong> Con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>w</mi><mo>=</mo><mfrac displaystyle="true"><mrow><mi>x</mi><mo>+</mo><mn>2</mn><mi>y</mi></mrow><msqrt><mi>z</mi></msqrt></mfrac></mrow><annotation encoding="application/x-tex">w=\dfrac{x+2y}{\sqrt{z}}</annotation></semantics></math>,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>r</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>y</mi><mo>=</mo><mi>s</mi><mo>+</mo><mi>t</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>z</mi><mo>=</mo><msup><mi>r</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">x=r,\ y=s+t,\ z=r^2</annotation></semantics></math>,
+encuentra
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>∂</mi><mi>w</mi><mi>/</mi><mi>∂</mi><mi>r</mi></mrow><annotation encoding="application/x-tex">\partial w/\partial r</annotation></semantics></math>.</p>
+<p><strong>6)</strong> Calcula la derivada direccional de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>x</mi><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mi>z</mi><mo>=</mo><mn>15</mn></mrow><annotation encoding="application/x-tex">x^2+y^2z=15</annotation></semantics></math>
+en
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="true" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1,2)</annotation></semantics></math>,
+dirección
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>u</mi><mo accent="true">→</mo></mover><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mn>2</mn><mo>,</mo><mo>−</mo><mn>1</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec u=\langle2,-1\rangle</annotation></semantics></math>.</p>
+<p><em>(Algoritmos 5, 6 y 7. En el 5,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+dependen de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>r</mi><annotation encoding="application/x-tex">r</annotation></semantics></math>
+— dos términos activos, no uno.)</em></p>
+<h2 id="plantilla-c-parcial-4-volúmenes">Plantilla C — Parcial 4,
+volúmenes</h2>
+<p><strong>7)</strong> Determina el volumen entre
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">y=x^2</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mn>6</mn></mrow><annotation encoding="application/x-tex">y=6</annotation></semantics></math>,
+con altura
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mfrac displaystyle="true"><mi>y</mi><mn>2</mn></mfrac></mrow><annotation encoding="application/x-tex">z=\dfrac{y}{2}</annotation></semantics></math>.</p>
+<p><strong>8)</strong> Calcula el volumen entre una esfera de radio 5 y
+un cono con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>φ</mi><mo>=</mo><mi>π</mi><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">\varphi=\pi/6</annotation></semantics></math>.</p>
+<p><strong>9)</strong> Determina el área del círculo de intersección del
+ejercicio 8.</p>
+<p><em>(Algoritmos 8, 10 y 11 — el 8 y el 9 comparten toda la
+geometría.)</em></p>
+<h2 id="plantilla-d-parcial-4-área-lateral-e-integral-de-línea">Plantilla D
+— Parcial 4, área lateral e integral de línea</h2>
+<p><strong>10)</strong> Cilindro
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>−</mo><mn>2</mn><mo stretchy="true" form="postfix">)</mo></mrow><mn>2</mn></msup><mo>+</mo><msup><mi>y</mi><mn>2</mn></msup><mo>=</mo><mn>4</mn></mrow><annotation encoding="application/x-tex">(x-2)^2+y^2=4</annotation></semantics></math>,
+techo
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>z</mi><mo>=</mo><mn>9</mn><mo>−</mo><msup><mi>x</mi><mn>2</mn></msup><mo>−</mo><msup><mi>y</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">z=9-x^2-y^2</annotation></semantics></math>.
+Determina el área lateral bajo el techo.</p>
+<p><strong>11)</strong> Evalúa
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mo>∫</mo><mi>C</mi></msub><mover><mi>F</mi><mo accent="true">→</mo></mover><mo>⋅</mo><mi>d</mi><mover><mi>r</mi><mo accent="true">→</mo></mover></mrow><annotation encoding="application/x-tex">\displaystyle\int_C\vec F\cdot d\vec r</annotation></semantics></math>
+con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mover><mi>F</mi><mo accent="true">→</mo></mover><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo>,</mo><mi>y</mi><mo stretchy="true" form="postfix">)</mo></mrow><mo>=</mo><mo stretchy="false" form="prefix">⟨</mo><mo>−</mo><mi>y</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>x</mi><mo>−</mo><mn>3</mn><mo stretchy="false" form="postfix">⟩</mo></mrow><annotation encoding="application/x-tex">\vec F(x,y)=\langle-y,\ x-3\rangle</annotation></semantics></math>
+sobre
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mo>=</mo><mo>sin</mo><mi>x</mi><mo>,</mo><mspace width="0.222em"></mspace><mi>x</mi><mo>∈</mo><mrow><mo stretchy="true" form="prefix">[</mo><mn>0</mn><mo>,</mo><mi>π</mi><mo stretchy="true" form="postfix">]</mo></mrow></mrow><annotation encoding="application/x-tex">y=\sin x,\ x\in[0,\pi]</annotation></semantics></math>.</p>
+<p><em>(Algoritmos 9 y 12. El 11 trae integración por partes:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mo>=</mo><mi>x</mi><mo>−</mo><mn>3</mn><mo>,</mo><mspace width="0.222em"></mspace><mi>d</mi><mi>v</mi><mo>=</mo><mo>sin</mo><mi>x</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">u=x-3,\ dv=\sin x\,dx</annotation></semantics></math>.)</em></p>
+<hr />
+<h1 id="sección-4-tablas-rápidas">SECCIÓN 4 — Tablas rápidas</h1>
+<h2 id="derivadas-1ª-y-2ª">Derivadas (1ª y 2ª)</h2>
+<table>
+<thead>
+<tr class="header">
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f(t)</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>′</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f&#39;(t)</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>f</mi><mi>″</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">f&#39;&#39;(t)</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>⋅</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">c\cdot t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>c</mi><annotation encoding="application/x-tex">c</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mn>2</mn></msup><annotation encoding="application/x-tex">t^2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>t</mi></mrow><annotation encoding="application/x-tex">2t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><mo>⋅</mo><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">c\cdot t^2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>c</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">2ct</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>c</mi></mrow><annotation encoding="application/x-tex">2c</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>t</mi><mn>3</mn></msup><annotation encoding="application/x-tex">t^3</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>3</mn><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">3t^2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>6</mn><mi>t</mi></mrow><annotation encoding="application/x-tex">6t</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msqrt><mi>t</mi></msqrt><annotation encoding="application/x-tex">\sqrt t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mfrac displaystyle="true"><mn>1</mn><mrow><mn>2</mn><msqrt><mi>t</mi></msqrt></mrow></mfrac><annotation encoding="application/x-tex">\dfrac1{2\sqrt t}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mfrac displaystyle="true"><mn>1</mn><mrow><mn>4</mn><msup><mi>t</mi><mrow><mn>3</mn><mi>/</mi><mn>2</mn></mrow></msup></mrow></mfrac></mrow><annotation encoding="application/x-tex">-\dfrac1{4t^{3/2}}</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">\sin t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>cos</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">\cos t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">-\sin t</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>cos</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">\cos t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">-\sin t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>cos</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">-\cos t</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msup><mi>e</mi><mrow><mi>c</mi><mi>t</mi></mrow></msup><annotation encoding="application/x-tex">e^{ct}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>c</mi><msup><mi>e</mi><mrow><mi>c</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">ce^{ct}</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>c</mi><mn>2</mn></msup><msup><mi>e</mi><mrow><mi>c</mi><mi>t</mi></mrow></msup></mrow><annotation encoding="application/x-tex">c^2e^{ct}</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>ln</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">\ln t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mi>t</mi></mrow><annotation encoding="application/x-tex">1/t</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mn>1</mn><mi>/</mi><msup><mi>t</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">-1/t^2</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<h2 id="integrales-básicas">Integrales básicas</h2>
+<table>
+<thead>
+<tr class="header">
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>f</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>x</mi><mo stretchy="true" form="postfix">)</mo></mrow><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int f(x)\,dx</annotation></semantics></math></th>
+<th>Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><msup><mi>x</mi><mi>n</mi></msup><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int x^n\,dx</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mfrac displaystyle="true"><msup><mi>x</mi><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></msup><mrow><mi>n</mi><mo>+</mo><mn>1</mn></mrow></mfrac><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">\dfrac{x^{n+1}}{n+1}+C</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mo>sin</mo><mi>x</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int \sin x\,dx</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>−</mo><mo>cos</mo><mi>x</mi><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">-\cos x+C</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mo>cos</mo><mi>x</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int \cos x\,dx</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>sin</mo><mi>x</mi><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">\sin x+C</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><msup><mi>e</mi><mi>x</mi></msup><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int e^{x}\,dx</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>e</mi><mi>x</mi></msup><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">e^x+C</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mfrac displaystyle="true"><mn>1</mn><mi>x</mi></mfrac><mspace width="0.167em"></mspace><mi>d</mi><mi>x</mi></mrow><annotation encoding="application/x-tex">\int \dfrac1x\,dx</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>ln</mo><mo stretchy="false" form="prefix">|</mo><mi>x</mi><mo stretchy="false" form="postfix">|</mo><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">\ln\lvert x\rvert+C</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>∫</mo><mi>u</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>v</mi></mrow><annotation encoding="application/x-tex">\int u\,dv</annotation></semantics></math>
+(por partes)</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>u</mi><mi>v</mi><mo>−</mo><mo>∫</mo><mi>v</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>u</mi></mrow><annotation encoding="application/x-tex">uv-\int v\,du</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<h2 id="trigonometría-valores-clave">Trigonometría — valores clave</h2>
+<table>
+<thead>
+<tr class="header">
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi>/</mi><mn>6</mn></mrow><annotation encoding="application/x-tex">\pi/6</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi>/</mi><mn>4</mn></mrow><annotation encoding="application/x-tex">\pi/4</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi>/</mi><mn>3</mn></mrow><annotation encoding="application/x-tex">\pi/3</annotation></semantics></math></th>
+<th><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>π</mi><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\pi/2</annotation></semantics></math></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>sin</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\sin\theta</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\sqrt2/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>3</mn></msqrt><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\sqrt3/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>cos</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\cos\theta</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>3</mn></msqrt><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\sqrt3/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msqrt><mn>2</mn></msqrt><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">\sqrt2/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mi>/</mi><mn>2</mn></mrow><annotation encoding="application/x-tex">1/2</annotation></semantics></math></td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>0</mn><annotation encoding="application/x-tex">0</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Identidad clave:</strong>
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mo>sin</mo><mn>2</mn></msup><mi>θ</mi><mo>+</mo><msup><mo>cos</mo><mn>2</mn></msup><mi>θ</mi><mo>=</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">\sin^2\theta+\cos^2\theta=1</annotation></semantics></math>
+(aparece en curvatura, T/N, hélice).</p>
+<h2 id="coordenadas-esféricas">Coordenadas esféricas</h2>
+<p><math display="block" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mo>=</mo><mi>ρ</mi><mo>sin</mo><mi>φ</mi><mo>cos</mo><mi>θ</mi><mspace width="2.0em"></mspace><mi>y</mi><mo>=</mo><mi>ρ</mi><mo>sin</mo><mi>φ</mi><mo>sin</mo><mi>θ</mi><mspace width="2.0em"></mspace><mi>z</mi><mo>=</mo><mi>ρ</mi><mo>cos</mo><mi>φ</mi><mspace width="2.0em"></mspace><mi>d</mi><mi>V</mi><mo>=</mo><msup><mi>ρ</mi><mn>2</mn></msup><mo>sin</mo><mi>φ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>ρ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>φ</mi><mspace width="0.167em"></mspace><mi>d</mi><mi>θ</mi></mrow><annotation encoding="application/x-tex">x=\rho\sin\varphi\cos\theta \qquad y=\rho\sin\varphi\sin\theta \qquad z=\rho\cos\varphi \qquad dV=\rho^2\sin\varphi\,d\rho\,d\varphi\,d\theta</annotation></semantics></math></p>
+<p><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>ρ</mi><annotation encoding="application/x-tex">\rho</annotation></semantics></math>
+= distancia al origen ·
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>φ</mi><annotation encoding="application/x-tex">\varphi</annotation></semantics></math>
+= ángulo desde el eje
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>z</mi><annotation encoding="application/x-tex">z</annotation></semantics></math>
+(0 a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math>)
+·
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>θ</mi><annotation encoding="application/x-tex">\theta</annotation></semantics></math>
+= ángulo en el plano
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mi>y</mi></mrow><annotation encoding="application/x-tex">xy</annotation></semantics></math>
+(0 a
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>2</mn><mi>π</mi></mrow><annotation encoding="application/x-tex">2\pi</annotation></semantics></math>)</p>
+<h2 id="rumbos-vectores-tipo-brújula">Rumbos (vectores tipo
+brújula)</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Rumbo</th>
+<th>Ángulo estándar</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>N θ E</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>90</mn><mi>°</mi><mo>−</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">90°-\theta</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>N θ O</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>90</mn><mi>°</mi><mo>+</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">90°+\theta</annotation></semantics></math></td>
+</tr>
+<tr class="odd">
+<td>S θ E</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>270</mn><mi>°</mi><mo>+</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">270°+\theta</annotation></semantics></math></td>
+</tr>
+<tr class="even">
+<td>S θ O</td>
+<td><math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>270</mn><mi>°</mi><mo>−</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">270°-\theta</annotation></semantics></math></td>
+</tr>
+</tbody>
+</table>
+<p><em>(E=0°, N=90°, O=180°, S=270°. Si el destino sube en la lista,
+suma; si baja, resta.)</em></p>
+<hr />
+<h1 id="sección-5-errores-comunes-y-checklist">SECCIÓN 5 — Errores
+comunes y checklist</h1>
+<h2 id="errores-que-más-se-repiten">Errores que más se repiten</h2>
+<ul>
+<li>❌ <strong>Calculadora en grados cuando debía estar en
+radianes</strong> (o al revés). Si el ángulo trae “°” es grados; si es
+un número puro
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>t</mi><mo>=</mo><mn>1.2</mn></mrow><annotation encoding="application/x-tex">t=1.2</annotation></semantics></math>)
+o trae
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>π</mi><annotation encoding="application/x-tex">\pi</annotation></semantics></math>,
+es radianes.</li>
+<li>❌ <strong>Confundir
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>cos</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\cos\theta</annotation></semantics></math>
+con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>sin</mo><mi>θ</mi></mrow><annotation encoding="application/x-tex">\sin\theta</annotation></semantics></math></strong>
+en
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>x</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">x(t)</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>y</mi><mrow><mo stretchy="true" form="prefix">(</mo><mi>t</mi><mo stretchy="true" form="postfix">)</mo></mrow></mrow><annotation encoding="application/x-tex">y(t)</annotation></semantics></math>
+del tiro parabólico:
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>x</mi><annotation encoding="application/x-tex">x</annotation></semantics></math>
+usa coseno,
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>y</mi><annotation encoding="application/x-tex">y</annotation></semantics></math>
+usa seno.</li>
+<li>❌ <strong>Olvidar el signo negativo</strong> al derivar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>cos</mo><mi>t</mi><mo>→</mo><mo>−</mo><mo>sin</mo><mi>t</mi></mrow><annotation encoding="application/x-tex">\cos t\to-\sin t</annotation></semantics></math>.</li>
+<li>❌ <strong>Dejar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>t</mi><annotation encoding="application/x-tex">t</annotation></semantics></math>
+de más (o de menos)</strong> al derivar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msup><mi>t</mi><mn>2</mn></msup><mo>→</mo><mn>2</mn><mi>t</mi></mrow><annotation encoding="application/x-tex">t^2\to2t</annotation></semantics></math>.</li>
+<li>❌ <strong>No poner valor absoluto</strong> en curvatura y en
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>N</mi></msub><annotation encoding="application/x-tex">a_N</annotation></semantics></math>
+(el producto cruz puede salir negativo, pero
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>κ</mi><annotation encoding="application/x-tex">\kappa</annotation></semantics></math>
+y
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><msub><mi>a</mi><mi>N</mi></msub><annotation encoding="application/x-tex">a_N</annotation></semantics></math>
+son positivos).</li>
+<li>❌ <strong>Olvidar
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo>sin</mo><mi>φ</mi></mrow><annotation encoding="application/x-tex">\sin\varphi</annotation></semantics></math></strong>
+en el integrando en coordenadas esféricas.</li>
+<li>❌ <strong>No revisar qué variables dependen de
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>s</mi><annotation encoding="application/x-tex">s</annotation></semantics></math></strong>
+en regla de la cadena (te ahorra términos que son cero).</li>
+<li>❌ <strong>Signo del término independiente del plano</strong>
+(<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>a</mi><mi>x</mi><mo>+</mo><mi>b</mi><mi>y</mi><mo>+</mo><mi>c</mi><mi>z</mi><mo>=</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">ax+by+cz=d</annotation></semantics></math>
+→
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>D</mi><mo>=</mo><mo>−</mo><mi>d</mi></mrow><annotation encoding="application/x-tex">D=-d</annotation></semantics></math>
+en la fórmula de distancia).</li>
+</ul>
+<h2 id="checklist-antes-de-entregar-cada-ejercicio">Checklist antes de
+entregar cada ejercicio</h2>
+<ul class="task-list">
+<li><label><input type="checkbox"></input>¿Identifiqué bien el tipo de
+ejercicio (Sección 1)?</label></li>
+<li><label><input type="checkbox"></input>¿Mi calculadora está en el modo
+correcto (RAD/DEG)?</label></li>
+<li><label><input type="checkbox"></input>¿Escribí todos los pasos numerados,
+no solo el resultado final?</label></li>
+<li><label><input type="checkbox"></input>Si es
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msub><mi>a</mi><mi>T</mi></msub><mo>,</mo><msub><mi>a</mi><mi>N</mi></msub></mrow><annotation encoding="application/x-tex">a_T,a_N</annotation></semantics></math>:
+¿comprobé con
+<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><msubsup><mi>a</mi><mi>T</mi><mn>2</mn></msubsup><mo>+</mo><msubsup><mi>a</mi><mi>N</mi><mn>2</mn></msubsup><mo>=</mo><msup><mi>g</mi><mn>2</mn></msup></mrow><annotation encoding="application/x-tex">a_T^2+a_N^2=g^2</annotation></semantics></math>?</label></li>
+<li><label><input type="checkbox"></input>Si es integral: ¿los límites
+corresponden a la intersección correcta?</label></li>
+<li><label><input type="checkbox"></input>¿El resultado tiene sentido
+(positivo cuando debe serlo, orden de magnitud razonable)?</label></li>
+</ul>
+</body>
+</html>
